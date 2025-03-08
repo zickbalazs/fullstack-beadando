@@ -1,0 +1,55 @@
+:root{
+    /*App main colors*/
+    --noveny-primary: #f3d59c;
+    --noveny-secondary: #f6c18b;
+    
+    /*App text colors*/
+    --text-primary: #404040;
+    --text-primary-dark: #fbfbfb;
+    --text-link: #f8a97e;
+}
+
+nav{
+    background: var(--text-primary)
+}
+header{
+    background: var(--noveny-primary);
+    color: var(--text-primary);
+    text-align: center;
+    padding: 3rem !important;
+}
+footer{
+    text-align: center;
+    background: var(--text-primary);
+    color: var(--text-primary-dark);
+}
+header, main, footer{
+    padding: 1.25rem;
+}
+3
+.btn-primary{
+    --bs-btn-color: var(--text-primary);
+    --bs-btn-border-color: var(--noveny-primary);
+    --bs-btn-bg: var(--noveny-primary);
+    
+    --bs-btn-hover-color: var(--text-primary-dark);
+    --bs-btn-hover-border-color: var(--text-primary-dark);
+    --bs-btn-hover-bg: color-mix(in srgb, var(--noveny-primary), #000 10%);
+
+    --bs-btn-active-color: var(--text-primary);
+    --bs-btn-active-bg: color-mix(in srgb, var(--noveny-primary), #000 4.5%);
+    --bs-btn-active-border-color: color-mix(in srgb, var(--noveny-primary), #000 10%);
+}
+.btn-secondary{
+    --bs-btn-color: var(--text-primary);
+    --bs-btn-border-color: var(--noveny-secondary);
+    --bs-btn-bg: var(--noveny-secondary);
+    
+    --bs-btn-hover-color: var(--text-primary-dark);
+    --bs-btn-hover-border-color: var(--text-primary-dark);
+    --bs-btn-hover-bg: color-mix(in srgb, var(--noveny-secondary), #000 10%);
+
+    --bs-btn-active-color: var(--text-primary);
+    --bs-btn-active-bg: color-mix(in srgb, var(--noveny-secondary), #000 4.5%);
+    --bs-btn-active-border-color: color-mix(in srgb, var(--noveny-primary), #000 10%);
+}
