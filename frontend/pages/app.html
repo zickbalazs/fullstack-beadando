@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/style.css">
+	<title>Növénygondozó Rendszer - Program</title>
+</head>
+<body>
+	<div class="container">
+
+		<header>
+			<h1>Növénygondozó</h1>
+		</header>
+		<nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <a href="#" class="navbar-brand">Növénygondozó</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/">Főoldal</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Alkalmazás</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Útmutató</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Kapcsolat</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div id="uploader">
+            <main>
+                <h2>Importálás fájlból</h2>
+                <hr>
+                <form class="mb-3 p-1">
+                    <div class="mb-3">
+                        <label for="file" class="form-label">Fájl (.csv)</label>
+                        <input type="file" name="file" id="file" required accept=".csv" class="form-control">
+                    </div>
+                </form>
+                <h2>Adatok megadása manuálisan</h2>
+                <form class="mb-3 p-1 container-fluid" id="manualFicus">
+                    <div class="mb-3 container" id="ficaeToAdd">
+                    </div>
+                    <input class="btn btn-primary" id="submit" type="button" value="Terv készítése">
+                    <input class="btn btn-primary" id="ficusAdder" type="button" value="Új növény felvétele">
+                </form>
+                <hr>
+            </main>    
+        </div>
+        <div id="result" class="d-none"></div>
+        <footer>
+        	<span>&copy; Zick Balázs 2025.</span>
+        </footer>
+	</div>
+
+    <template id="ficusAddForm">
+        <div class="row">
+            <div class="mb-3">
+                <label for="ficusName" class="form-label">Név</label>
+                <input type="text" required placeholder="Növénynév" name="ficusName" id="ficusName" class="form-control">
+            </div>
+        </div>
+    </template>
+    <script src="/js/bootstrap.min.js"></script>
+</body>
+</html>
