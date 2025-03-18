@@ -6,7 +6,7 @@ public class WateringService : IWateringService
 {
     public IList<WateringBreakdownCell> GenerateBreakdown(IList<Ficus> fici)
     {
-        throw new NotImplementedException();
+        return makeBreakDown(fici);
     }
 
     public IList<WateringBreakdownCell> GenerateBreakdown(IFormFile fici)
