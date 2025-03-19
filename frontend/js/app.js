@@ -26,8 +26,8 @@ class Ficus{
         return {
             "name": this.#name,
             "type": this.#type,
-            "consumption": this.#consumption,
-            "frequency": this.#frequency
+            "consumption": Number(this.#consumption),
+            "frequency": Number(this.#frequency)
         }
     }
 
@@ -71,6 +71,13 @@ class TableCell{
     #day;
     #consumption;
     #type;    
+
+    constructor(day, consumption, type){
+        this.#day = day;
+        this.#consumption = consumption;
+        this.#type = type;
+    }
+
     AddCellToDomElement(node){
         let x = document.createElement("td");
         x.textContent = `Day ${this.#day}:\n${this.#consumption} l`;
@@ -80,11 +87,28 @@ class TableCell{
 }
 
 let Fici = [];
+let Table = [];
 
-let addFicus = ()=>{
+
+let addFicus = () => {
     let ficus = new Ficus();
     Fici.push(ficus);
     ficus.GenerateFormInDom(document.querySelector("#ficaeToAdd"))
+}
+
+let submitForm = () => {
+    let fici = Fici.map(e=>e.GetObject());
+    fetch('http://localhost:5069/Ficus', {
+        method: 'POST',
+        headers:{
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(fici),
+    }).then(data=>data.json()).then(response=>{
+        Table = response.map(e=>new TableCell(e.day, e.totalConsumption, e.type))
+    }).catch(e=>{
+        console.error(e);
+    })
 }
 
 document.querySelector("#ficusAdder").addEventListener("click", addFicus)
