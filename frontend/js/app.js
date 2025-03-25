@@ -78,22 +78,43 @@ class TableCell{
         this.#type = type;
     }
 
-    AddCellToDomElement(node){
+    AddCellToDomElement(){
         let x = document.createElement("td");
-        x.textContent = `Day ${this.#day}:\n${this.#consumption} l`;
+        x.textContent = `${this.#consumption} l`;
         x.classList.add(this.#type);
-        node.appendChild(x)
+        return x;
     }
 }
 
 let Fici = [];
 let Table = [];
 
+let addRow = (week) =>{
+    let rowElement = document.createElement("tr");
+    
+    let weekIdentifierCell = document.createElement("td");
+    weekIdentifierCell.textContent = "";
+    rowElement.appendChild(weekIdentifierCell);
+
+
+    week.forEach(x=>{
+        rowElement.appendChild(x.AddCellToDomElement())
+    });
+
+    document.querySelector("#resultData").appendChild(rowElement);
+
+}
 
 let addFicus = () => {
     let ficus = new Ficus();
     Fici.push(ficus);
     ficus.GenerateFormInDom(document.querySelector("#ficaeToAdd"))
+}
+
+let makeTableForDOM = () => {
+    document.querySelector("#resultData").innerHTML = "";
+    Table.forEach(addRow);
+    document.querySelector("#result").classList.remove("d-none");
 }
 
 let submitForm = () => {
@@ -105,7 +126,8 @@ let submitForm = () => {
         },
         body: JSON.stringify(fici),
     }).then(data=>data.json()).then(response=>{
-        Table = response.map(e=>new TableCell(e.day, e.totalConsumption, e.type))
+        Table = response.map(e=>e.map(x=>new TableCell(x.day, x.totalConsumption, x.type)));
+        makeTableForDOM(document.querySelector("#result"))
     }).catch(e=>{
         console.error(e);
     })

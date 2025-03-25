@@ -60,20 +60,32 @@
             <hr>
         </main>
     </div>
-    <div id="result" class="d-none"></div>
+    <div id="result" >
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Hétszám</th>
+                    <th>Hétfő</th>
+                    <th>Kedd</th>
+                    <th>Szerda</th>
+                    <th>Csütörtök</th>
+                    <th>Péntek</th>
+                    <th>Szombat</th>
+                    <th>Vasárnap</th>
+                </tr>
+            </thead>
+            <tbody id="resultData">
+
+            </tbody>
+            <tfoot>
+
+            </tfoot>
+        </table>
+    </div>
     <footer>
         <span>&copy; Zick Balázs 2025.</span>
     </footer>
 </div>
-
-<template id="ficusAddForm">
-    <div class="row">
-        <div class="mb-3">
-            <label for="ficusName" class="form-label">Név</label>
-            <input type="text" required placeholder="Növénynév" name="ficusName" id="ficusName" class="form-control">
-        </div>
-    </div>
-</template>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/app.js"></script>
 </body>
