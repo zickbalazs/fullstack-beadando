@@ -4,12 +4,12 @@ namespace Backend.Services;
 
 public class WateringService : IWateringService
 {
-    public IList<WateringBreakdownCell> GenerateBreakdown(IList<Ficus> fici)
+    public IList<WateringBreakdownCell>[] GenerateBreakdown(IList<Ficus> fici)
     {
         return makeBreakDown(fici);
     }
 
-    public IList<WateringBreakdownCell> GenerateBreakdown(IFormFile fici)
+    public IList<WateringBreakdownCell>[] GenerateBreakdown(IFormFile fici)
     {
         
         if (fici.Headers.ContentType.FirstOrDefault((e => e == "text/csv")) == null)
@@ -17,9 +17,7 @@ public class WateringService : IWateringService
 
         IList<Ficus> fileContent = makeFici(fici);
 
-        IList<WateringBreakdownCell> output = makeBreakDown(fileContent);
-
-        return output;
+        return makeBreakDown(fileContent);
     }
 
     private IList<Ficus> makeFici(IFormFile ficusFile)
@@ -43,23 +41,26 @@ public class WateringService : IWateringService
         return fici;
     }
 
-    private IList<WateringBreakdownCell> makeBreakDown(IList<Ficus> fici)
+    private IList<WateringBreakdownCell>[] makeBreakDown(IList<Ficus> fici)
     {
-        IList<WateringBreakdownCell> list = Enumerable.Range(1, 30).Select(x=>new WateringBreakdownCell()
-        {
-            Day = x,
-            Type = "None",
-            TotalConsumption = 0
-        }).ToList();
+        IList<WateringBreakdownCell>[] breakdown = [[], [], [], [], []];
 
-        foreach (WateringBreakdownCell cell in list)
+        for (int i = 0; i < 30; i++)
         {
-            IEnumerable<Ficus> thisDayFici = fici.Where(x => cell.Day % x.Frequency == 0);
-            int amountFici = thisDayFici.Count();
-            cell.TotalConsumption = thisDayFici.Sum(x => x.Consumption);
-            cell.Type = amountFici == 0 ? "None" : amountFici > 1 ? "Multiple" : "Single";
+            WateringBreakdownCell cell = new()
+            {
+                Day = i + 1,
+                Type = "",
+                TotalConsumption = 0
+            };
+            
+            IEnumerable<Ficus> actualFici = fici.Where(e => cell.Day % e.Frequency == 0);
+
+            cell.TotalConsumption = actualFici.Sum(x => x.Consumption);
+            cell.Type = actualFici.Any() ? actualFici.Count() > 1 ? "Multiple" : "Single" : "None";
+            
+            breakdown[i/7].Add(cell);
         }
-        
-        return list;
+        return breakdown;
     }
 }
