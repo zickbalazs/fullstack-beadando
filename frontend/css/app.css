@@ -1,0 +1,17 @@
+td.None{
+    background: var(--bs-success)
+}
+
+td.Multiple{
+    background: var(--bs-warning)
+}
+
+td.Single{
+    background: var(--bs-primary)
+}
+
+td.Single, td.Multiple, td.None{
+    color: var(--bs-light);
+    text-align: center;
+    padding: 1.25rem;
+}
