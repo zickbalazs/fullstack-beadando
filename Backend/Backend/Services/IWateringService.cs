@@ -4,7 +4,7 @@ namespace Backend.Services;
 
 public interface IWateringService
 {
-    IList<WateringBreakdownCell>[] GenerateBreakdown(IList<Ficus> fici);
-    IList<WateringBreakdownCell>[] GenerateBreakdown(IFormFile fici);
+    WateringBreakdown GenerateBreakdown(IList<Ficus> fici);
+    WateringBreakdown GenerateBreakdown(IFormFile fici);
 
 }

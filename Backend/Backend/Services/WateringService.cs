@@ -4,12 +4,12 @@ namespace Backend.Services;
 
 public class WateringService : IWateringService
 {
-    public IList<WateringBreakdownCell>[] GenerateBreakdown(IList<Ficus> fici)
+    public WateringBreakdown GenerateBreakdown(IList<Ficus> fici)
     {
         return makeBreakDown(fici);
     }
 
-    public IList<WateringBreakdownCell>[] GenerateBreakdown(IFormFile fici)
+    public WateringBreakdown GenerateBreakdown(IFormFile fici)
     {
         
         if (fici.Headers.ContentType.FirstOrDefault((e => e == "text/csv")) == null)
@@ -41,7 +41,7 @@ public class WateringService : IWateringService
         return fici;
     }
 
-    private IList<WateringBreakdownCell>[] makeBreakDown(IList<Ficus> fici)
+    private IList<WateringBreakdownCell>[] createTable(IList<Ficus> fici)
     {
         IList<WateringBreakdownCell>[] breakdown = [[], [], [], [], []];
 
@@ -63,4 +63,22 @@ public class WateringService : IWateringService
         }
         return breakdown;
     }
+
+    private WateringTotalStatistics[] makeStatistics(IList<Ficus> fici)
+    {
+        return fici.Select(e => new WateringTotalStatistics()
+        {
+            FicusName = e.Name,
+            TotalDaysNeededThisMonth = 30/e.Frequency,
+            TotalConsumption = e.Consumption * (30/e.Frequency)
+        }).ToArray();
+    }
+
+
+    private WateringBreakdown makeBreakDown(IList<Ficus> fici) =>
+        new()
+        {
+            TableRows = createTable(fici),
+            Breakdown = makeStatistics(fici),
+        };
 }
