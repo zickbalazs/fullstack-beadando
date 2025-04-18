@@ -1,3 +1,7 @@
+table{
+    border: 1px solid black;
+}
+
 td.None{
     background: var(--bs-success)
 }
@@ -10,6 +14,18 @@ td.Single{
     background: var(--bs-primary)
 }
 
+td.weekIdentifier{
+    text-align: center;
+    vertical-align: middle;
+}
+
+td:not(.weekIdentifier){
+    border: 1px solid black;
+    transition:background 0.1s;
+}
+td:not(.weekIdentifier):hover{
+    background: #5f5c5c;
+}
 td.Single, td.Multiple, td.None{
     color: var(--bs-light);
     text-align: center;

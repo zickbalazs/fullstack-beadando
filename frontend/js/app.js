@@ -19,10 +19,10 @@ class Ficus {
       this.#makeInputNode("ficusType", "text", "Növény típusa")
     );
     inputGroup.appendChild(
-      this.#makeInputNode("ficusConsumption", "number", "Fogyasztása")
+      this.#makeInputNode("ficusConsumption", "number", "Fogyasztása (l)")
     );
     inputGroup.appendChild(
-      this.#makeInputNode("ficusFrequency", "number", "Gyakoriság")
+      this.#makeInputNode("ficusFrequency", "number", "Gyakoriság (nap)")
     );
 
     node.appendChild(inputGroup);
@@ -103,7 +103,9 @@ let addRow = (week, weekNumber) => {
   let rowElement = document.createElement("tr");
   let weekIdentifierCell = document.createElement("td");
   
-  weekIdentifierCell.textContent = `${weekNumber+1}.`;
+  weekIdentifierCell.textContent = `${weekNumber+1}. hét`;
+  weekIdentifierCell.classList.add("weekIdentifier");
+
   rowElement.appendChild(weekIdentifierCell);
 
   week.forEach((x) => {
@@ -127,7 +129,7 @@ let makeTableForDOM = () => {
 
 let submitForm = () => {
   let fici = Fici.map((e) => e.GetObject());
-  fetch("http://localhost:5069/Ficus", {
+  fetch("http://localhost:8080/Ficus", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

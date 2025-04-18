@@ -12,6 +12,7 @@
 nav{
     background: var(--text-primary)
 }
+
 header{
     background: var(--noveny-primary);
     color: var(--text-primary);
@@ -19,6 +20,7 @@ header{
     padding: 3rem !important;
 }
 footer{
+    margin-top: auto;
     text-align: center;
     background: var(--text-primary);
     color: var(--text-primary-dark);
@@ -53,3 +55,4 @@ header, main, footer{
     --bs-btn-active-bg: color-mix(in srgb, var(--noveny-secondary), #000 4.5%);
     --bs-btn-active-border-color: color-mix(in srgb, var(--noveny-primary), #000 10%);
 }
+
