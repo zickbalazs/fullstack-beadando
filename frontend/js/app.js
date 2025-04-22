@@ -98,12 +98,13 @@ class TableCell {
 
 let Fici = [];
 let Table = [];
+let Stats = [];
 
 let addRow = (week, weekNumber) => {
   let rowElement = document.createElement("tr");
   let weekIdentifierCell = document.createElement("td");
-  
-  weekIdentifierCell.textContent = `${weekNumber+1}. hét`;
+
+  weekIdentifierCell.textContent = `${weekNumber + 1}. hét`;
   weekIdentifierCell.classList.add("weekIdentifier");
 
   rowElement.appendChild(weekIdentifierCell);
@@ -123,6 +124,7 @@ let addFicus = () => {
 
 let makeTableForDOM = () => {
   document.querySelector("#resultData").innerHTML = "";
+  makeStats();
   Table.forEach(addRow);
   document.querySelector("#result").classList.remove("d-none");
 };
@@ -138,7 +140,8 @@ let submitForm = () => {
   })
     .then((data) => data.json())
     .then((response) => {
-      let conversion = response.tableRows.map(e=>e.map(x=>new TableCell(x.day, x.totalConsumption, x.type)))
+      let conversion = response.tableRows.map(e => e.map(x => new TableCell(x.day, x.totalConsumption, x.type)))
+      Stats = response.breakdown;
       Table = conversion;
       makeTableForDOM(document.querySelector("#result"));
     })
@@ -153,18 +156,42 @@ let submitFile = () => {
   let fileForm = new FormData()
   fileForm.append('file', file);
 
-  console.log(fileForm);
-
   fetch('http://localhost:8080/Ficus/file', {
     method: 'POST',
     body: fileForm
-  }).then(res=>res.json()).then(data=>{
-      let conversion = data.tableRows.map(e=>e.map(x=>new TableCell(x.day, x.totalConsumption, x.type)))
-      Table = conversion;
-      makeTableForDOM(document.querySelector("#result"));
+  }).then(res => res.json()).then(data => {
+    let conversion = data.tableRows.map(e => e.map(x => new TableCell(x.day, x.totalConsumption, x.type)))
+    Table = conversion;
+    Stats = data.breakdown;
+    makeTableForDOM(document.querySelector("#result"));
   })
-  .catch(error=>console.error(error));
+    .catch(error => console.error(error));
 
+}
+
+let makeStats = () => {
+  document.querySelector("#statistics").innerHTML = "";
+  let list = document.createElement("ul");
+
+  Stats.forEach(x=>{
+    let item = document.createElement("li")
+    item.innerText = x.ficusName + ':'
+    list.appendChild(item);
+    
+    let itemsDetailsList = document.createElement("ul");
+    
+    let consDOM = document.createElement("li");
+    consDOM.innerText = `Teljes fogyasztás: ${x.totalConsumption} liter`;
+
+    let daysDOM = document.createElement("li");
+    daysDOM.innerText = `Összes locsolási nap: ${x.totalDaysNeededThisMonth}`
+
+    itemsDetailsList.append(...[consDOM, daysDOM]);
+    list.appendChild(itemsDetailsList)
+
+  })
+
+  document.querySelector("#statistics").append(list);
 }
 document.querySelector("#ficusAdder").addEventListener("click", addFicus);
 document.querySelector("#fileUpload").addEventListener("click", submitFile);
