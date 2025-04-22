@@ -138,9 +138,8 @@ let submitForm = () => {
   })
     .then((data) => data.json())
     .then((response) => {
-      Table = response.map((e) =>
-        e.map((x) => new TableCell(x.day, x.totalConsumption, x.type))
-      );
+      let conversion = response.tableRows.map(e=>e.map(x=>new TableCell(x.day, x.totalConsumption, x.type)))
+      Table = conversion;
       makeTableForDOM(document.querySelector("#result"));
     })
     .catch((e) => {
@@ -148,5 +147,25 @@ let submitForm = () => {
     });
 };
 
+let submitFile = () => {
+  let file = document.forms[0][0].files[0]
+
+  let fileForm = new FormData()
+  fileForm.append('file', file);
+
+  console.log(fileForm);
+
+  fetch('http://localhost:8080/Ficus/file', {
+    method: 'POST',
+    body: fileForm
+  }).then(res=>res.json()).then(data=>{
+      let conversion = data.tableRows.map(e=>e.map(x=>new TableCell(x.day, x.totalConsumption, x.type)))
+      Table = conversion;
+      makeTableForDOM(document.querySelector("#result"));
+  })
+  .catch(error=>console.error(error));
+
+}
 document.querySelector("#ficusAdder").addEventListener("click", addFicus);
+document.querySelector("#fileUpload").addEventListener("click", submitFile);
 document.querySelector("#submit").addEventListener("click", submitForm);
