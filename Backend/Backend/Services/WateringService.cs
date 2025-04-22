@@ -12,7 +12,7 @@ public class WateringService : IWateringService
     public WateringBreakdown GenerateBreakdown(IFormFile fici)
     {
         
-        if (fici.Headers.ContentType.FirstOrDefault((e => e == "text/csv")) == null)
+        if (fici.Headers.ContentType.FirstOrDefault((e => e == "text/csv" || e == "application/x-csv" || e == "application/vnd.ms-excel")) == null)
             throw new FormatException("Only .csv files are accepted!");
 
         IList<Ficus> fileContent = makeFici(fici);
