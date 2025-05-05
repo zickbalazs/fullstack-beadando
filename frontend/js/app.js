@@ -131,7 +131,7 @@ let makeTableForDOM = () => {
 
 let submitForm = () => {
   let fici = Fici.map((e) => e.GetObject());
-  fetch("http://localhost:8080/Ficus", {
+  fetch("http://localhost:5069/Ficus", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -156,7 +156,7 @@ let submitFile = () => {
   let fileForm = new FormData()
   fileForm.append('file', file);
 
-  fetch('http://localhost:8080/Ficus/file', {
+  fetch('http://localhost:5069/Ficus/file', {
     method: 'POST',
     body: fileForm
   }).then(res => res.json()).then(data => {
