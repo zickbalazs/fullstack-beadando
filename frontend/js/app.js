@@ -11,7 +11,6 @@ class Ficus {
   GenerateFormInDom(node) {
     let inputGroup = document.createElement("div");
 
-    inputGroup.classList.add("row");
     inputGroup.appendChild(
       this.#makeInputNode("ficusName", "text", "Növény neve")
     );
@@ -24,6 +23,7 @@ class Ficus {
     inputGroup.appendChild(
       this.#makeInputNode("ficusFrequency", "number", "Gyakoriság (nap)")
     );
+
 
     node.appendChild(inputGroup);
   }
@@ -60,6 +60,7 @@ class Ficus {
     input.id = `${name}-${this.Id}`;
     input.type = type;
     input.classList.add("mb-3");
+    input.addEventListener("input", validateManualAdditions);
 
     //label classes, parameter
     label.htmlFor = `${name}-${this.Id}`;
@@ -193,6 +194,39 @@ let makeStats = () => {
 
   document.querySelector("#statistics").append(list);
 }
+
+let validateFileButton = () => {
+  document.querySelector("#fileUpload").disabled = document.querySelector("#file").files.length <= 0
+}
+let validateManualAdditions = () => {
+  document.querySelector("#submit").disabled = Fici.length < 1;
+  for (let element of document.forms[1]){
+    switch(element.type){
+      case "button":
+        break;
+      default:
+        if (element.validity.badInput){
+          document.querySelector("#submit").disabled = true;
+        }
+        else if (element.value.trim() == ""){
+          document.querySelector("#submit").disabled = true;
+        }
+    }
+  }
+}
+let Reset = () => {
+  document.getElementById("ficaeToAdd").innerHTML = "";
+  Fici = [];
+  validateManualAdditions();
+}
+
+
+document.querySelector("#file").addEventListener("input", validateFileButton)
 document.querySelector("#ficusAdder").addEventListener("click", addFicus);
+document.querySelector("#ficusAdder").addEventListener("click", validateManualAdditions);
 document.querySelector("#fileUpload").addEventListener("click", submitFile);
 document.querySelector("#submit").addEventListener("click", submitForm);
+document.querySelector("#reset").addEventListener("click", Reset)
+
+window.addEventListener("load", validateFileButton)
+window.addEventListener("load", validateManualAdditions)
