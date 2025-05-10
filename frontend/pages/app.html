@@ -47,18 +47,17 @@
                     <label for="file" class="form-label">Fájl (.csv)</label>
                     <input type="file" name="file" id="file" required accept=".csv" class="form-control">
                 </div>
-                <input type="button" class="btn btn-primary" id="fileUpload" value="Feltöltés">
+                <input type="button" class="btn btn-primary" disabled id="fileUpload" value="Feltöltés">
             </form>
             <hr>
             <h1>Adatok megadása manuálisan</h1>
             <form class="mb-3 p-1 container-fluid" id="manualFicus">
                 <div class="mb-3 container" id="ficaeToAdd">
                 </div>
-                <input class="btn btn-primary" id="submit" type="button" value="Terv készítése">
                 <input class="btn btn-primary" id="ficusAdder" type="button" value="Új növény felvétele">
             </form>
             <hr>
-        
+            <input class="btn btn-primary" id="submit" type="button" value="Terv készítése">
     </div>
     <div class="px-3 d-none" id="result">
         <h1>Eredmény</h1>
